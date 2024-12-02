@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<!-- Estilos personalizados -->
+<link rel="stylesheet" href="{% static 'css/maquetaActividad.css' %}">
+<link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'Bootstrap/icono/font/bootstrap-icons.css' %}" rel="stylesheet">
+
+<div class="d-flex align-items-center justify-content-center min-vh-100 bg-light">
+    <div class="card shadow-sm p-4" style="width: 100%; max-width: 400px; border-radius: 15px;">
+        <div class="text-center">
+            <i class="bi bi-person-circle text-primary" style="font-size: 4rem;"></i>
+            <h3 class="mt-2">Iniciar Sesión</h3>
+        </div>
+        <form method="POST" class="mt-4" action="{% url 'login' %}">
+            {% csrf_token %}
+
+            <!-- Campo: Nombre de Usuario -->
+            <div class="mb-3">
+                <label for="id_username" class="form-label">
+                    <i class="bi bi-person"></i> Correo Electrónico
+                </label>
+                <input type="email" name="username" id="id_username" 
+                       class="form-control {{ form.username.errors|yesno:'is-invalid,' }}" 
+                       value="{{ form.username.value|default:'' }}">
+                {% for error in form.username.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <!-- Campo: Contraseña -->
+            <div class="mb-3">
+                <label for="id_password" class="form-label">
+                    <i class="bi bi-lock"></i> Contraseña
+                </label>
+                <input type="password" name="password" id="id_password" 
+                       class="form-control {{ form.password.errors|yesno:'is-invalid,' }}" 
+                       value="{{ form.password.value|default:'' }}">
+                {% for error in form.password.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <!-- Botón: Iniciar Sesión -->
+            <button type="submit" class="btn btn-primary w-100">
+                <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+            </button>
+        </form>
+        <div class="text-center mt-3">
+            <p class="text-muted">¿No tienes una cuenta? <a href="{% url 'register' %}" class="text-decoration-none">Regístrate aquí</a></p>
+        </div>
+    </div>
+</div>
+
+<div class="footer text-center mt-4">
+    <p class="text-muted">&copy; 2024 Mi Sitio Web. Todos los derechos reservados. | <span>&#174;</span> Gerardo Ferreira</p>
+</div>
+
+{% endblock %}
+

@@ -1,0 +1,30 @@
+/* Estilos para el calendario */
+#calendar {
+    width: 100%; /* Asegura que el calendario ocupe todo el ancho disponible */
+    flex: 1; /* El calendario ocupa todo el espacio disponible dentro de main */
+    min-height: 0; /* Permite que el calendario se ajuste a la altura disponible */
+}
+
+/* Media Queries para ajustar el tamaño del calendario según la pantalla */
+
+/* Para pantallas grandes (Escritorio) */
+@media (min-width: 900px) {
+    #calendar {
+        height: 700px; /* Altura predeterminada para escritorio */
+    }
+}
+
+/* Para pantallas de tablet */
+@media (max-width: 768px) {
+    #calendar {
+        height: 400px; /* Ajustamos la altura del calendario en tablet */
+    }
+}
+
+/* Para pantallas móviles */
+@media (max-width: 480px) {
+    #calendar {
+        height: 600px; /* Ajustamos la altura del calendario en móviles */
+    }
+}
+

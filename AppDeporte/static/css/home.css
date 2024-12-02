@@ -1,0 +1,150 @@
+
+.container2 {
+    height: 750px;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: start;
+}
+
+.card {
+    background-color: black;
+    width: 100px;
+    border-radius: .75rem;
+    background-size: cover;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 2rem;
+    margin: 0 10px;
+    display: flex;
+    align-items: flex-end;
+    transition: .6s cubic-bezier(.28,-0.03,0,.99);
+    box-shadow: 0px 10px 30px -5px rgba(0,0,0,0.8);
+}
+
+/* Estilo para la descripción (oculta inicialmente) */
+.description {
+    color: white;
+    opacity: 0; /* Oculta la descripción al principio */
+    transform: translateY(50px); /* Comienza más abajo */
+    transition: opacity 0.6s ease, transform 0.6s ease; /* Transición más lenta */
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+
+
+.card > .row {
+    color: white;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.card > .row > .icon {
+    background: #223;
+    color: white;
+    border-radius: 50%;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px;
+}
+
+.card > .row > .description {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    overflow: hidden;
+    height: 80px;
+    width: 520px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition-delay: .3s;
+    transition: all .3s ease;
+}
+
+/* Efecto hover para la tarjeta seleccionada */
+.card:hover {
+    transform: translateY(-10px); /* Sube la tarjeta */
+    box-shadow: 0px 20px 50px -5px rgba(0,0,0,0.8); /* Aumenta la sombra */
+    filter: grayscale(0%); /* Deja la tarjeta en color */
+}
+
+/* Establecemos las otras tarjetas en blanco y negro */
+.card:not(:hover) {
+    filter: grayscale(100%); /* Aplica filtro blanco y negro a las no seleccionadas */
+}
+
+.description p {
+    color: #b0b0ba;
+    padding-top: 5px;
+}
+
+.description h4 {
+    text-transform: uppercase;
+}
+
+input {
+    display: none;
+}
+
+input:checked + label {
+    width: 600px;
+}
+
+input:checked + label .description {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+.card[for="c1"] {
+    background-image: url('../img/Img_carrusel/img1.webp');
+}
+.card[for="c2"] {
+    background-image: url('../img/Img_carrusel/img2.webp');
+}
+.card[for="c3"] {
+    background-image: url('../img/Img_carrusel/img3.webp');
+}
+.card[for="c4"] {
+    background-image: url('../img/Img_carrusel/img4.webp');
+}
+
+/* Responsividad */
+@media (max-width: 1200px) {
+    .card {
+        width: 250px; /* Aumenta el tamaño de la tarjeta en pantallas medianas */
+    }
+
+    .container2 {
+        height: auto;
+        flex-wrap: wrap; /* Cambia la disposición de las tarjetas a filas */
+    }
+}
+
+@media (max-width: 768px) {
+    .card {
+        width: 180px; /* Reduce el tamaño de la tarjeta para pantallas más pequeñas */
+    }
+
+    .container2 {
+        height: auto;
+        flex-wrap: wrap; /* Cambia la disposición a filas para pantallas más pequeñas */
+        justify-content: center; /* Centra las tarjetas */
+    }
+
+    .card > .row > .description {
+        width: 300px; /* Ajusta el tamaño de la descripción en pantallas pequeñas */
+    }
+}
+
+@media (max-width: 480px) {
+    .card {
+        width: 150px; /* Reduce aún más el tamaño de las tarjetas en pantallas muy pequeñas */
+    }
+
+    .card > .row > .description {
+        width: 100%; /* Ajusta el tamaño de la descripción al 100% del ancho de la tarjeta */
+    }
+}

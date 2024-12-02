@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/maquetaActividad.css' %}">
+
+
+<style>
+    /* Estilos personalizados */
+    .dashboard-item {
+        border: 1px solid #000;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 10px 0;
+        height: 100%;
+    }
+    .dashboard-item.large {
+        height: 200px;
+    }
+    .dashboard-item.medium {
+        height: 150px;
+    }
+    .dashboard-item.small {
+        height: 100px;
+    }
+</style>
+
+
+<div class="grid-container">
+    <div class="main">
+
+        <div class="container">
+
+            <div class="container-fluid">
+                <div class="row">
+                    <!-- Fila de elementos pequeños (cabeza) -->
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="dashboard-item small">Usuarios</div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="dashboard-item small">Header 2</div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="dashboard-item small">Header 3</div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="dashboard-item small">Header 4</div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <!-- Fila de elementos grandes -->
+                    <div class="col-12 col-md-12 col-lg-6">
+                        <div class="dashboard-item large">Main Content</div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="dashboard-item medium">Sidebar 1</div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="dashboard-item medium">Sidebar 2</div>
+                    </div>
+                </div>
+            
+                <div class="row">
+                    <!-- Fila de elementos más pequeños al fondo -->
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="dashboard-item small">Footer 1</div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="dashboard-item small">Footer 2</div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="dashboard-item small">Footer 3</div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="dashboard-item small">Footer 4</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+            
+        
+    </div>
+
+    <div class="footer">
+        <!-- Comentario: Pie de página con información de copyright y marca registrada -->
+        <p>&copy; 2024 Mi Sitio Web. Todos los derechos reservados. | <span>&#174;</span> Gerardo Ferreira</p>
+    </div>
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,322 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+
+<link rel="stylesheet" href="{% static 'css/maquetaActividad.css' %}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<div class="grid-container">
+    <div class="main">
+
+        <div class="container">
+            <main class="content px-3 py-2">
+                <div class="container-fluid">
+                    <div class="row g-4 justify-content-between">
+                        <!-- Primer div -->
+                        <div class="col d-flex">
+                            <div id="nombre1" class="card flex-fill border-0 shadow-sm w-100">
+                                <div class="card-body p-3">
+                                    <h5>Total Usuarios</h5>
+                                    <h4>{{ usuarios|length|add:"-1" }}</h4>
+                                    <div>
+                                        <span class="badge text-success me-2">{{ porcentaje_entrenadores }}%</span>
+                                        <span class="text-muted">Entrenadores</span><br>
+                                        <span class="badge text-success me-2">{{ porcentaje_usuarios }}%</span>
+                                        <span class="text-muted">Usuarios</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Segundo div -->
+                        <div class="col d-flex">
+                            <div id="nombre2" class="card flex-fill border-0 shadow-sm w-100">
+                                <div class="card-body p-3">
+                                    
+                                        <div id="nombre2" class="card flex-fill border-0 shadow-sm w-100">
+                                            
+                                                <canvas id="graficoPorcentajes" width="100" height="100"></canvas>
+                                            
+                                        </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Tercer div -->
+                        <div class="col d-flex">
+                            <div id="nombre3" class="card flex-fill border-0 shadow-sm w-100">
+                                <div class="card-body p-3">
+                                    <h5>Estadísticas</h5>
+                                    <p class="text-muted">Métricas generales</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Cuarto div -->
+                        <div class="col d-flex">
+                            <div id="nombre4" class="card flex-fill border-0 shadow-sm w-100">
+                                <div class="card-body p-3">
+                                    <h5>Información</h5>
+                                    <p class="text-muted">Datos adicionales</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Quinto div -->
+                        <div class="col d-flex">
+                            <div id="nombre5" class="card flex-fill border-0 shadow-sm w-100">
+                                <div class="card-body p-3">
+                                    <h5>Nuevos Usuarios</h5>
+                                    <p class="text-muted">Últimos registros: <strong>{{ nuevos_usuarios }}</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        
+        
+
+        <!-- Elementos de la tabla -->
+
+        <div class="card border-0">
+            <div class="card-header">
+                <h6 class="card-title">
+                    Usuario : {{ user.email }}
+                </h6>
+
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-secondary">
+                            <tr>
+                                <th scope="col">Tipo Usuario</th>
+                                <th scope="col">Entrenador Deporte</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Apellido P.</th>
+                                <th scope="col">Apellido M.</th>
+                                <th scope="col">Fecha Conexión</th>
+                                <th scope="col">Activo</th>
+                                <th scope="col">Acciones</th> <!-- Nueva columna para los botones -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in usuarios %}
+                            {% if user.tipo_user != None %}
+                            <tr data-id="{{ user.id }}">
+                                <td class="tipo_user">
+                                    {% if user.tipo_user == 'E' %}
+                                    Entrenador
+                                    {% else %}
+                                    Usuario
+                                    {% endif %}
+                                </td>
+                                <td class="deporte">{{ user.deporte }}</td>
+                                <td class="email">{{ user.email }}</td>
+                                <td class="username">{{ user.username }}</td>
+                                <td class="first_name">{{ user.first_name }}</td>
+                                <td class="last_name">{{ user.last_name }}</td>
+                                <td class="last_login">{{ user.last_login|date:"d-m-y H:i" }}</td>
+                                <td class="is_active">{{ user.is_active|yesno:"Sí,No" }}</td>
+                                <td style="display: flex; gap: 10px;">
+                                    <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#updateModal" data-id="{{ user.id }}"
+                                        data-username="{{ user.username }}" data-email="{{ user.email }}"
+                                        data-tipo_user="{{ user.tipo_user }}" data-deporte="{{ user.deporte }}"
+                                        data-first_name="{{ user.first_name }}" data-last_name="{{ user.last_name }}"
+                                        data-is_active="{{ user.is_active }}">
+                                        Actualizar
+                                    </button>
+                                    <form method="POST" action="{% url 'eliminar_usuario' user.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            Eliminar
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de actualización -->
+    <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateModalLabel">Actualizar Usuario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Formulario para actualizar usuario -->
+                    <form id="updateForm" method="POST" action="{% url 'actualizar_usuario' %}">
+                        {% csrf_token %}
+                        <!-- Campo oculto para el ID del usuario -->
+                        <input type="hidden" id="user_id" name="user_id">
+
+                        <!-- Campos para actualizar -->
+                        <div class="mb-3">
+                            <label for="tipo_user" class="form-label">Tipo de Usuario</label>
+                            <select class="form-select" id="tipo_user" name="tipo_user" required>
+                                <option value="E">Entrenador</option>
+                                <option value="U">Usuario</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="deporte" class="form-label">Deporte</label>
+                            <select class="form-select" id="deporte" name="deporte" required>
+                                <option value="none">None</option>
+                                <option value="Baby fútbol">Baby fútbol</option>
+                                <option value="Baloncesto">Baloncesto</option>
+                                <option value="Atletismo">Atletismo</option>
+                                <option value="Voleibol">Voleibol</option>
+                                <option value="Ping-pong">Ping-pong</option>
+                                <option value="Taekwondo">Taekwondo</option>
+                                <option value="jiu-jitsu Brasileño">jiu-jitsu Brasileño</option>
+                                <option value="Gimnasia">Gimnasia</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="is_active" class="form-label">Activo</label>
+                            <select class="form-select" id="is_active" name="is_active" required>
+                                <option value="True">Sí</option>
+                                <option value="False">No</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+
+        const updateModal = document.getElementById('updateModal');
+        updateModal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget; // Botón que activó el modal
+            const userId = button.getAttribute('data-id');
+            const username = button.getAttribute('data-username');
+            const email = button.getAttribute('data-email');
+            const tipoUser = button.getAttribute('data-tipo_user');
+            const deporte = button.getAttribute('data-deporte');
+            const firstName = button.getAttribute('data-first_name');
+            const lastName = button.getAttribute('data-last_name');
+            const isActive = button.getAttribute('data-is_active');
+
+            // Rellenar los campos del formulario
+            updateModal.querySelector('#user_id').value = userId;
+            updateModal.querySelector('#username').value = username;
+            updateModal.querySelector('#email').value = email;
+            updateModal.querySelector('#tipo_user').value = tipoUser;
+            updateModal.querySelector('#deporte').value = deporte;
+            updateModal.querySelector('#first_name').value = firstName;
+            updateModal.querySelector('#last_name').value = lastName;
+            updateModal.querySelector('#is_active').value = isActive;
+        });
+
+    </script>
+
+    {% if messages %}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        {% for message in messages %}
+        Swal.fire({
+            icon: 'success',
+            title: '¡Éxito!',
+            text: '{{ message }}',
+            showConfirmButton: true,
+        });
+        {% endfor %}
+    </script>
+    {% endif %}
+
+
+    <script>
+
+        $(document).ready(function () {
+            $('#form-usuario').submit(function (event) {
+                event.preventDefault();
+                $.ajax({
+                    url: "{% url 'actualizar_usuario' %}",
+                    method: "POST",
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: '¡Éxito!',
+                            text: 'Usuario actualizado correctamente',
+                            showConfirmButton: true,
+                        }).then(() => {
+                            location.reload(); // Recarga la página si deseas actualizar la vista
+                        });
+                    },
+                    error: function () {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Hubo un error al actualizar el usuario.',
+                            showConfirmButton: true,
+                        });
+                    }
+                });
+            });
+        });
+
+    </script>
+
+
+    <div class="footer">
+        <!-- Comentario: Pie de página con información de copyright y marca registrada -->
+        <p>&copy; 2024 Mi Sitio Web. Todos los derechos reservados. | <span>&#174;</span> Gerardo Ferreira</p>
+    </div>
+</div>
+
+
+<script>
+    // Asegúrate de que las variables tienen valores válidos o un valor por defecto
+    const porcentajeEntrenadores = parseFloat({{ porcentaje_entrenadores|default:"0" }});
+    const porcentajeUsuarios = parseFloat({{ porcentaje_usuarios|default:"0" }});
+    const restante = 100 - (porcentajeEntrenadores + porcentajeUsuarios);
+
+    // Configuración del gráfico
+    const ctx = document.getElementById('graficoPorcentajes').getContext('2d');
+    const grafico = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Entrenadores', 'Usuarios', 'Otros'],
+            datasets: [{
+                data: [porcentajeEntrenadores, porcentajeUsuarios, restante],
+                backgroundColor: ['#4caf50', '#2196f3', '#f44336'],
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+            }
+        }
+    });
+</script>
+
+
+
+
+
+{% endblock %}

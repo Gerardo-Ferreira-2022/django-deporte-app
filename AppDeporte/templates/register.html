@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/maquetaActividad.css' %}">
+
+<!-- sweetalert 2 -->
+<link href="{% static 'sweetalert/sweetalert2.min.css' %}" rel="stylesheet">
+<script src="{% static 'sweetalert/sweetalert2.min.js' %}"></script>
+
+
+
+<div class="grid-container">
+    <div class="main">
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-md-4 offset-md-4 mt-2">
+                    <div class="container">
+                    <h3 class="text-center"><i class="bi bi-person-circle"></i><br>Registro de Usuarios</h3>
+                    </div>
+                    <form action="{% url 'register' %}" method="POST">
+                        {% csrf_token %}
+                        
+                        <!-- Campo: Nombre de Usuario -->
+                        <div class="mb-3">
+                            <label for="id_username" class="form-label">
+                                <i class="bi bi-person"></i> Nombre
+                            </label>
+                            <input type="text" name="username" id="id_username" 
+                                   class="form-control {{ form.username.errors|yesno:'is-invalid,' }}" 
+                                   value="{{ form.username.value|default:'' }}">
+                            {% for error in form.username.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+            
+                        <!-- Campo: Apellido Paterno -->
+                        <div class="mb-3">
+                            <label for="id_first_name" class="form-label">
+                                <i class="bi bi-person"></i> Apellido Paterno
+                            </label>
+                            <input type="text" name="first_name" id="id_first_name" 
+                                   class="form-control {{ form.first_name.errors|yesno:'is-invalid,' }}" 
+                                   value="{{ form.first_name.value|default:'' }}">
+                            {% for error in form.first_name.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+            
+                        <!-- Campo: Apellido Materno -->
+                        <div class="mb-3">
+                            <label for="id_last_name" class="form-label">
+                                <i class="bi bi-person"></i> Apellido Materno
+                            </label>
+                            <input type="text" name="last_name" id="id_last_name" 
+                                   class="form-control {{ form.last_name.errors|yesno:'is-invalid,' }}" 
+                                   value="{{ form.last_name.value|default:'' }}">
+                            {% for error in form.last_name.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+            
+                        <!-- Campo: Email -->
+                        <div class="mb-3">
+                            <label for="id_email" class="form-label">
+                                <i class="bi bi-envelope"></i> Correo Electrónico
+                            </label>
+                            <input type="email" name="email" id="id_email" 
+                                   class="form-control {{ form.email.errors|yesno:'is-invalid,' }}" 
+                                   value="{{ form.email.value|default:'' }}">
+                            {% for error in form.email.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+            
+                        <!-- Campo: Fecha de Nacimiento -->
+                        <div class="mb-3">
+                            <label for="id_date_of_birth" class="form-label">
+                                <i class="bi bi-calendar"></i> Fecha de Nacimiento
+                            </label>
+                            <input type="date" name="date_of_birth" id="id_date_of_birth" 
+                                   class="form-control {{ form.date_of_birth.errors|yesno:'is-invalid,' }}" 
+                                   value="{{ form.date_of_birth.value|default:'' }}">
+                            {% for error in form.date_of_birth.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+            
+                        <!-- Campo: Género -->
+                        <div class="mb-3">
+                            <label for="id_gender" class="form-label">
+                                 Género
+                            </label>
+                            <select name="gender" id="id_gender" 
+                                    class="form-select {{ form.gender.errors|yesno:'is-invalid,' }}">
+                                <option value="">Seleccionar...</option>
+                                <option value="M" {% if form.gender.value == "M" %}selected{% endif %}>Masculino</option>
+                                <option value="F" {% if form.gender.value == "F" %}selected{% endif %}>Femenino</option>
+                                <option value="O" {% if form.gender.value == "O" %}selected{% endif %}>Otro</option>
+                            </select>
+                            {% for error in form.gender.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Campo comuna -->
+                        <div class="mb-3">
+                            <label for="comuna" class="form-label">
+                                <i class="bi bi-geo-alt"></i> Comuna
+                            </label>
+                            <select name="comuna" id="id_comuna" 
+                                    class="form-select {% if form.comuna.errors %}is-invalid{% endif %}">
+                                <option value="" selected>Seleccionar...</option>
+                                {% for value, label in form.fields.comuna.choices %}
+                                <option value="{{ value }}" {% if value == form.data.comuna %}selected{% endif %}>
+                                    {{ label }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                            {% if form.comuna.errors %}
+                            <div class="invalid-feedback">
+                                {{ form.comuna.errors.0 }}
+                            </div>
+                            {% endif %}
+                        </div>
+            
+                        <!-- Campo: Teléfono -->
+                        <div class="mb-3">
+                            <label for="id_phone" class="form-label">
+                                <i class="bi bi-telephone"></i> Teléfono
+                            </label>
+                            <input type="text" name="phone" id="id_phone" 
+                                   class="form-control {{ form.phone.errors|yesno:'is-invalid,' }}" 
+                                   value="{{ form.phone.value|default:'' }}">
+                            {% for error in form.phone.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+            
+                        <!-- Campo: Contraseña -->
+                        <div class="mb-3">
+                            <label for="id_password1" class="form-label">
+                                <i class="bi bi-lock"></i> Contraseña
+                            </label>
+                            <input type="password" name="password1" id="id_password1" 
+                                   class="form-control {{ form.password1.errors|yesno:'is-invalid,' }}">
+                            {% for error in form.password1.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+            
+                        <!-- Campo: Confirmar Contraseña -->
+                        <div class="mb-3">
+                            <label for="id_password2" class="form-label">
+                                <i class="bi bi-lock"></i> Confirmar Contraseña
+                            </label>
+                            <input type="password" name="password2" id="id_password2" 
+                                   class="form-control {{ form.password2.errors|yesno:'is-invalid,' }}">
+                            {% for error in form.password2.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        {{ form.tipo_user }} <!-- Campo oculto -->
+            
+                        <!-- Botón de Enviar -->
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="bi bi-check-circle"></i> Registrarse
+                        </button>
+                    </form>
+
+                    
+            
+                </div>
+            
+            </div>
+            
+            
+
+        </div>
+
+
+    </div>
+
+
+    <div class="footer">
+        <!-- Comentario: Pie de página con información de copyright y marca registrada -->
+        <p>&copy; 2024 Mi Sitio Web. Todos los derechos reservados. | <span>&#174;</span> Gerardo Ferreira</p>
+    </div>
+</div>
+
+
+    
+
+
+
+
+{% endblock %}

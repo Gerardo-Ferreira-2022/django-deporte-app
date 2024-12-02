@@ -1,0 +1,63 @@
+/* Estilo para los eventos del calendario */
+.event-background-baby-football {
+    background-color: #FF5733; /* Color para 'Baby fútbol' */
+    color: white;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.event-background-basketball {
+    background-color: #F39C12; /* Color para 'Baloncesto' */
+    color: white;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.event-background-athletics {
+    background-color: #3498db; /* Color para 'Atletismo' */
+    color: white;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.event-background-volleyball {
+    background-color: #9B59B6; /* Color para 'Voleibol' */
+    color: white;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.event-background-pingpong {
+    background-color: #1E8B8C; /* Color para 'Ping-pong' */
+    color: white;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.event-background-taekwondo {
+    background-color: #F1C40F; /* Color para 'Taekwondo' */
+    color: white;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.event-background-jiujitsu {
+    background-color: #E74C3C; /* Color para 'Jiu-Jitsu Brasileño' */
+    color: white;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.event-background-gymnastics {
+    background-color: #16A085; /* Color para 'Gimnasia' */
+    color: white;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.event-background-default {
+    background-color: #2ECC71; /* Color predeterminado */
+    color: white;
+    border-radius: 4px;
+    padding: 5px;
+}

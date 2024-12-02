@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/maquetaActividad.css' %}">
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+
+
+<div class="grid-container">
+    <div class="main">
+        <div class="container">
+        <div class="wrapper">
+            <div class="container2">
+                <input type="radio" name="slide" id="c1" checked>
+                <label for="c1" class="card">
+                    <div class="row">
+                        <div class="icon">1</div>
+                        <div class="description">
+                            
+                            <a class="navbar-brand" href="/"><img src="{% static 'img/icono/inacap.png' %}" alt="Logo" class="icono"></a>
+                             <h4>Ping pong</h4>
+                        </div>
+                    </div>
+                </label>
+                <input type="radio" name="slide" id="c2" >
+                <label for="c2" class="card">
+                    <div class="row">
+                        <div class="icon">2</div>
+                        
+                        <div class="description">
+                            <a class="navbar-brand" href="/"><img src="{% static 'img/icono/inacap.png' %}" alt="Logo" class="icono"></a>
+                             <h4>Taekwondo</h4>
+                        </div>
+                    </div>
+                </label>
+                <input type="radio" name="slide" id="c3" >
+                <label for="c3" class="card">
+                    <div class="row">
+                        <div class="icon">3</div>
+                        <div class="description">
+                            
+                            <a class="navbar-brand" href="/"><img src="{% static 'img/icono/inacap.png' %}" alt="Logo" class="icono"></a>
+                            <h4>Crossfit</h4>
+                        </div>
+                    </div>
+                </label>
+                <input type="radio" name="slide" id="c4" >
+                <label for="c4" class="card">
+                    <div class="row">
+                        <div class="icon">4</div>
+                        <div class="description">
+                            
+                            <a class="navbar-brand" href="/"><img src="{% static 'img/icono/inacap.png' %}" alt="Logo" class="icono"></a>
+                             <h4>Fútbol femenino</h4>
+                        </div>
+                    </div>
+                </label>
+            </div>
+        </div>
+            
+    </div>
+
+</div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const cards = document.querySelectorAll('.card');
+
+    // Cuando se pasa el ratón sobre una tarjeta, mostrarla en color y en blanco y negro las otras
+    cards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            // Restaurar la apariencia de todas las tarjetas
+            cards.forEach(c => c.style.filter = 'grayscale(100%)');
+            
+            // Dejar la tarjeta seleccionada en color
+            card.style.filter = 'grayscale(0%)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            // Restaurar todas las tarjetas al estado inicial cuando el mouse sale
+            cards.forEach(c => c.style.filter = 'grayscale(100%)');
+        });
+    });
+});
+</script>
+
+
+
+
+
+<div class="footer">
+    <!-- Comentario: Pie de página con información de copyright y marca registrada -->
+    <p>&copy; 2024 Mi Sitio Web. Todos los derechos reservados. | <span>&#174;</span> Gerardo Ferreira</p>
+</div>
+
+
+<script src="{% static 'js/home.js' %}"></script>
+<script src="{% static 'Bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+
+{% endblock %}
