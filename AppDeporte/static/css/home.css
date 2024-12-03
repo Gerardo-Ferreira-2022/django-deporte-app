@@ -99,16 +99,16 @@ input:checked + label .description {
 }
 
 .card[for="c1"] {
-    background-image: url('../img/Img_carrusel/img1.webp');
+    background-image: url('../img/Img_carrusel/img1.jpg');
 }
 .card[for="c2"] {
-    background-image: url('../img/Img_carrusel/img2.webp');
+    background-image: url('../img/Img_carrusel/img2.jpg');
 }
 .card[for="c3"] {
-    background-image: url('../img/Img_carrusel/img3.webp');
+    background-image: url('../img/Img_carrusel/img3.jpg');
 }
 .card[for="c4"] {
-    background-image: url('../img/Img_carrusel/img4.webp');
+    background-image: url('../img/Img_carrusel/img4.jpg');
 }
 
 /* Responsividad */
