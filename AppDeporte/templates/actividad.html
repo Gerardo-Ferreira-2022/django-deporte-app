@@ -42,6 +42,7 @@
                                 <div class="form-group">
                                     <label for="actividad_nombre">Deporte</label>
                                     <select class="form-control" id="actividad_nombre" name="actividad_nombre" required>
+                                        <option value="" disabled selected>Seleccionar Deporte</option>
                                         {% if user.is_superuser %}
                                             <option value="Baby fútbol">Baby fútbol</option>
                                             <option value="Baloncesto">Baloncesto</option>
