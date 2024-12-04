@@ -70,27 +70,33 @@
                         <a class="nav-link" href="{% url 'dashboard' %}"><i class="bi bi-speedometer me-2"></i>Dashboard |</a>
                     </li>
 
+                    {% if user.is_authenticated and user.is_superuser %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'usuarios' %}"><i class="bi bi-table me-2"></i>Usuarios |</a>
+                    </li>
+                    {% endif %}
+
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'actividad' %}"><i class="bi bi-activity me-2"></i>Actividad</a>
+                    </li>
+                    {% endif %}
+
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'agendar' %}"><i class="bi bi-pencil-square me-2"></i>Agendar</a>
+                    </li>
+                    
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/usuarios"><i class="bi bi-table me-2"></i>Usuarios |</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/actividad"><i class="bi bi-activity me-2"></i>Actividad</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href=""><i class="bi bi-pencil-square me-2"></i>Agendar</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href=""><i class="bi bi-clipboard2-check-fill me-2"></i>Asistencia</a>
+                        <a class="nav-link" href="{% url 'asistencia' %}" ><i class="bi bi-clipboard2-check-fill me-2"></i>Asistencia</a>
                     </li>
 
 
                     <li class="nav-item">
-                        <a class="nav-link" href=""><i class="bi bi-textarea-t me-2"></i>Foro |</a>
+                        <a class="nav-link" href="{% url 'foro' %}"><i class="bi bi-textarea-t me-2"></i>Foro |</a>
                     </li>
+                    {% endif %}
 
                
                     {% if user.is_authenticated %}
@@ -102,7 +108,7 @@
                     {% else %}
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/register"><i class="bi bi-person-fill-check me-2"></i>Registrase</a>
+                        <a class="nav-link" href="{% url 'register' %}"><i class="bi bi-person-fill-check me-2"></i>Registrase</a>
                     </li>
 
                     <li class="nav-item">

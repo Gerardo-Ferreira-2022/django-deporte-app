@@ -77,6 +77,7 @@ def logout_view(request):
 
 
 # Vista actividad.
+@login_required
 def actividad(request):
     actividades = Actividad.objects.all()
     
@@ -152,6 +153,7 @@ def actualizar_usuario(request):
     
 
 #eliminar usuario
+@login_required
 def eliminar_usuario(request, user_id):
     # Verificar si el usuario existe
     user = get_object_or_404(User, id=user_id)
@@ -169,6 +171,7 @@ def eliminar_usuario(request, user_id):
 
 
 #insertar actividad
+@login_required
 def crear_actividad(request):
     if request.method == 'POST':
         try:
@@ -237,5 +240,23 @@ def crear_actividad(request):
 
     # Si no es un POST, solo renderizar el formulario
     return render(request, 'actividad.html')
+
+
+# vista asistencia
+@login_required
+def asistencia(request):
+    return render(request, 'asistencia.html')
+
+
+# vista foro
+@login_required
+def foro(request):
+    return render(request, 'foro.html')
+
+
+# vista agendar
+@login_required
+def agendar(request):
+    return render(request, 'agendar.html')
 
 

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home, dashboard, actividad, usuarios, actualizar_usuario, eliminar_usuario, crear_actividad
+from .views import home, dashboard, actividad, usuarios, actualizar_usuario, eliminar_usuario, crear_actividad, foro, asistencia, agendar
 from .views import RegisterView
 from . import views
 
@@ -14,6 +14,9 @@ urlpatterns = [
     path('usuarios/', usuarios, name='usuarios'),
     path('usuarios/actualizar/', actualizar_usuario, name='actualizar_usuario'),
     path('eliminar_usuario/<user_id>/', eliminar_usuario, name='eliminar_usuario'),
+    path('asistencia/', asistencia, name='asistencia'),
+    path('foro/', foro, name='foro'),
+    path('agendar/', agendar, name='agendar'),
     
 
 ]
