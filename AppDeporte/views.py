@@ -11,6 +11,8 @@ from django.http import JsonResponse
 from django.utils import timezone
 from .models import Actividad
 from datetime import timedelta
+from django.db.models import Count
+from django.db.models.functions import TruncMonth
 
 # Create your views here.
 
@@ -22,7 +24,45 @@ def home(request):
 # Vista dashboard.
 @login_required
 def dashboard(request):
-    return render(request, 'dashboard.html')
+    # Filtrar usuarios que no son superusuarios
+    usuarios = User.objects.filter(is_superuser=False)
+
+    # Conteos
+    total_usuarios = usuarios.count()  # Total de usuarios excluyendo superusuarios
+    total_entrenadores = usuarios.filter(tipo_user='E').count()  # 'E' para Entrenadores
+    total_usuarios_generales = usuarios.filter(tipo_user='U').count()  # 'U' para Usuarios generales
+
+    # Cálculo de porcentajes
+    porcentaje_entrenadores = (total_entrenadores / total_usuarios) * 100 if total_usuarios > 0 else 0
+    porcentaje_usuarios = (total_usuarios_generales / total_usuarios) * 100 if total_usuarios > 0 else 0
+
+    # Datos para el gráfico de actividades por mes
+    actividades_por_mes = (
+        Actividad.objects
+        .annotate(mes=TruncMonth('fecha'))  # Agrupar por mes
+        .values('mes')                     # Seleccionar el campo agrupado
+        .annotate(total=Count('id'))       # Contar actividades por mes
+        .order_by('mes')                   # Ordenar cronológicamente
+    )
+
+    # Crear listas para el gráfico
+    meses = [actividad['mes'].strftime('%B %Y') for actividad in actividades_por_mes]
+    cantidades = [actividad['total'] for actividad in actividades_por_mes]
+
+    # Contexto para el template
+    context = {
+        # Datos de usuarios
+        'total_usuarios': total_usuarios,
+        'total_entrenadores': total_entrenadores,
+        'total_usuarios_generales': total_usuarios_generales,
+        'porcentaje_entrenadores': round(porcentaje_entrenadores, 1),
+        'porcentaje_usuarios': round(porcentaje_usuarios, 1),
+
+        # Datos del gráfico
+        'meses': meses,
+        'cantidades': cantidades,
+    }
+    return render(request, 'dashboard.html', context)
 
 
 # Vista registro.
