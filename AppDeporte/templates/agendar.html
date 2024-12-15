@@ -4,8 +4,190 @@
 
 {% load static %}
 
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f7f7f7;
+    }
+    .navbar {
+        background-color: #343a40;
+    }
+    .navbar-brand, .nav-link {
+        color: #ffffff;
+    }
+    .navbar-light .navbar-nav .nav-link.active {
+        color: #ff6f61;
+    }
+    .cupos-disponibles {
+        color: #28a745; /* Verde */
+        font-weight: bold;
+    }
+    .sin-cupos {
+        color: #dc3545; /* Rojo */
+        font-weight: bold;
+    }
+    .card-title {
+        font-size: 1.2rem;
+        color: #343a40;
+    }
+    .display-4 {
+        font-size: 2.5rem;
+        color: #007bff; /* Azul */
+    }
+    .table th, .table td {
+        vertical-align: middle;
+    }
+    .card {
+        background-color: #ffffff;
+        border: 1px solid #e0e0e0;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+    }
+    footer {
+        background-color: #343a40;
+        color: #ffffff;
+    }
+</style>
 
-<h1>En Contrucción</h1>
+
+ <!-- Charts Section -->
+ <div class="mt-5">
+    <div class="container">
+        <!--<h4 class="text-center" style="color: #343a40;">Estadísticas</h4>-->
+        <div class="row">
+            <div class="col-6">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Actividades Totales</h5>
+                        <p class="card-text display-4">5</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Reservas Hoy</h5>
+                        <p class="card-text display-4">12</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Gráfico de Popularidad</h5>
+                    <p class="card-text">[Gráfico Placeholder]</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Reservation Form Section -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-4" style="color: #343a40;">Reservar una Actividad</h2>
+        <div class="row">
+            <!-- Available Activities on the Left -->
+            <div class="col-lg-8">
+                <h3 class="mb-3" style="color: #343a40;">Actividades Disponibles</h3>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Actividad</th>
+                                <th>Cupos Totales</th>
+                                <th>Reservados</th>
+                                <th>Disponibles</th>
+                                <th>Días</th>
+                                <th>Entrenador</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Baby Fútbol</td>
+                                <td>20</td>
+                                <td>15</td>
+                                <td class="cupos-disponibles">5</td>
+                                <td>Lunes, Miércoles, Viernes</td>
+                                <td>Juan Pérez</td>
+                            </tr>
+                            <tr>
+                                <td>Baloncesto</td>
+                                <td>10</td>
+                                <td>10</td>
+                                <td class="sin-cupos">0</td>
+                                <td>Martes, Jueves</td>
+                                <td>María Gómez</td>
+                            </tr>
+                            <tr>
+                                <td>Taekwondo</td>
+                                <td>25</td>
+                                <td>20</td>
+                                <td class="cupos-disponibles">5</td>
+                                <td>Sábado</td>
+                                <td>Carlos Sánchez</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Reservation Form and Charts on the Right -->
+            <div class="col-lg-4 mt-4">
+                <h3 class="mb-3" style="color: #343a40;">Reservar</h3>
+                <form>
+                    <!-- Select Activity -->
+                    <div class="mb-3">
+                        <label for="activitySelect" class="form-label">Seleccionar Actividad</label>
+                        <select class="form-select" id="activitySelect" required>
+                            <option value="">Seleccione una actividad...</option>
+                            <option value="1">Baby Fútbol</option>
+                            <option value="2">Baloncesto</option>
+                            <option value="3">Taekwondo</option>
+                        </select>
+                    </div>
+
+                    <!-- Select Date -->
+                    <div class="mb-3">
+                        <label for="reservationDate" class="form-label">Fecha</label>
+                        <input type="date" class="form-control" id="reservationDate" required>
+                    </div>
+
+                    <!-- Select Time -->
+                    <div class="mb-3">
+                        <label for="reservationTime" class="form-label">Hora</label>
+                        <input type="time" class="form-control" id="reservationTime" required>
+                    </div>
+
+                    <!-- Participant Information -->
+                    <div class="mb-3">
+                        <label for="participantName" class="form-label">Nombre del Participante</label>
+                        <input type="text" class="form-control" id="participantName" placeholder="Ingrese su nombre completo" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="participantEmail" class="form-label">Correo Electrónico</label>
+                        <input type="email" class="form-control" id="participantEmail" placeholder="Ingrese su correo electrónico" required>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Reservar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
 
 
 {% endblock %}

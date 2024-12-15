@@ -4,7 +4,141 @@
 
 {% load static %}
 
-<h1>En Contrucción</h1>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Flatpickr CSS (Calendario) -->
+    <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+        .table-container {
+            margin-top: 30px;
+        }
+        .table th, .table td {
+            vertical-align: middle;
+        }
+        .form-control, .form-select {
+            border-radius: 8px;
+        }
+        .form-label {
+            font-weight: bold;
+        }
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+            border-radius: 8px;
+        }
+        .btn-custom:hover {
+            background-color: #0056b3;
+        }
+        .calendar-container {
+            margin-top: 30px;
+        }
+    </style>
+
+    <!-- Filtro de Actividades -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Registrar Asistencia a Actividades</h2>
+
+            <!-- Filtro por actividad -->
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <input type="text" class="form-control" id="searchActivity" placeholder="Buscar actividad...">
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-custom w-100" onclick="filterActivities()">Buscar</button>
+                </div>
+            </div>
+
+            <!-- Calendario de selección de fecha -->
+            <div class="calendar-container">
+                <label for="activityDate" class="form-label">Seleccionar Fecha de Actividad</label>
+                <input type="text" class="form-control" id="activityDate" placeholder="Seleccione una fecha" readonly>
+            </div>
+
+            <!-- Tabla de Asistencia -->
+            <div class="table-container">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Actividad</th>
+                            <th>Fecha</th>
+                            <th>Participante</th>
+                            <th>Asistencia</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendanceTable">
+                        <!-- Fila de ejemplo para Baby Fútbol -->
+                        <tr>
+                            <td>Baby Fútbol</td>
+                            <td>12/12/2024</td>
+                            <td>Juan López</td>
+                            <td><input type="checkbox" class="attendance-checkbox" data-participant="Juan López"></td>
+                        </tr>
+                        <tr>
+                            <td>Baby Fútbol</td>
+                            <td>12/12/2024</td>
+                            <td>María Gómez</td>
+                            <td><input type="checkbox" class="attendance-checkbox" data-participant="María Gómez"></td>
+                        </tr>
+                        <!-- Fila de ejemplo para Baloncesto -->
+                        <tr>
+                            <td>Baloncesto</td>
+                            <td>12/12/2024</td>
+                            <td>Pablo Martínez</td>
+                            <td><input type="checkbox" class="attendance-checkbox" data-participant="Pablo Martínez"></td>
+                        </tr>
+                        <tr>
+                            <td>Baloncesto</td>
+                            <td>12/12/2024</td>
+                            <td>Clara Rodríguez</td>
+                            <td><input type="checkbox" class="attendance-checkbox" data-participant="Clara Rodríguez"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="btn btn-custom w-100 mt-3" onclick="submitAttendance()">Registrar Asistencia</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Flatpickr JS (Calendario) -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <script>
+        // Función para filtrar actividades
+        function filterActivities() {
+            var searchTerm = document.getElementById('searchActivity').value.toLowerCase();
+            var rows = document.querySelectorAll('#attendanceTable tr');
+            rows.forEach(function(row) {
+                var activity = row.cells[0].textContent.toLowerCase();
+                if (activity.indexOf(searchTerm) === -1) {
+                    row.style.display = 'none';
+                } else {
+                    row.style.display = '';
+                }
+            });
+        }
+
+        // Función para registrar asistencia
+        function submitAttendance() {
+            var checkboxes = document.querySelectorAll('.attendance-checkbox');
+            checkboxes.forEach(function(checkbox) {
+                var participant = checkbox.getAttribute('data-participant');
+                var attended = checkbox.checked ? 'Sí' : 'No';
+                console.log(`Asistencia de ${participant}: ${attended}`);
+            });
+            alert("Asistencia registrada correctamente.");
+        }
+
+        // Inicialización de flatpickr para el calendario
+        flatpickr("#activityDate", {
+            dateFormat: "d/m/Y",  // Formato de la fecha
+            minDate: "today",     // Solo fechas futuras
+        });
+    </script>
 
 
 
